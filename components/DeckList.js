@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux'; 
+import { connect } from 'react-redux';
 
 class DeckList extends Component {
   static propTypes = {
@@ -17,7 +17,7 @@ class DeckList extends Component {
 
     if (decks.length === 0) {
       return (
-        <View>
+        <View style={styles.container}>
           <Text>No decks created yet.</Text>
         </View>
       );
@@ -28,6 +28,14 @@ class DeckList extends Component {
         <Text>deck list component</Text>
       </View>
     );
+  }
+}
+
+const styles = {
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 }
 
