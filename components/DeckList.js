@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 class DeckList extends Component {
   static propTypes = {
     decks: PropTypes.array,
+    navigateToDeckView: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     decks: [],
+  }
+
+  onPress = (title) => {
+    const { navigateToDeckView } = this.props;
+
+    navigateToDeckView(title);
   }
 
   renderDeck = (deck) => {
@@ -18,10 +25,10 @@ class DeckList extends Component {
     const cardString = questionCount === 1 ? 'card' : 'cards';
 
     return (
-      <View key={title} style={styles.deck}>
+      <TouchableOpacity key={title} style={styles.deck} onPress={() => this.onPress(title)}>
         <Text>{title}</Text>
         <Text>{`${questionCount} ${cardString}`}</Text>
-      </View>
+      </TouchableOpacity>
     );
   }
 
@@ -58,6 +65,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 20,
     alignItems: 'center',
+    marginTop: 5,
+    marginBottom: 5,
   },
 })
 
@@ -71,4 +80,10 @@ function mapStateToProps(cardDecks) {
   }
 }
 
-export default connect(mapStateToProps)(DeckList);
+function mapDispatchToProps(dispatch, { navigation }) {
+  return {
+    navigateToDeckView: (title) => navigation.navigate('DeckView', { title }),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckList);
