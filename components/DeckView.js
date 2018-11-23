@@ -9,6 +9,7 @@ class DeckView extends Component {
     title: PropTypes.string.isRequired,
     questions: PropTypes.array.isRequired,
     navigateToCreateQuestion: PropTypes.func.isRequired,
+    navigateToQuiz: PropTypes.func.isRequired,
   }
 
   onAddCardPress = () => {
@@ -17,17 +18,24 @@ class DeckView extends Component {
     navigateToCreateQuestion(title);
   }
 
+  onStartQuizPress = () => {
+    const { title, navigateToQuiz } = this.props;
+
+    navigateToQuiz(title);
+  }
+
   render() {
     const { title, questions } = this.props;
-    console.log("questions----", questions)
     const questionCount = questions.length;
     const cardString = questionCount === 1 ? 'card' : 'cards';
+    const canShowQuizButton = questionCount > 0;
 
     return (
       <View style={styles.container}>
         <Text>{title}</Text>
         <Text>{`${questionCount} ${cardString}`}</Text>
         <Button text="Add card" onPress={this.onAddCardPress} />
+        {canShowQuizButton && <Button text="Start quiz" onPress={this.onStartQuizPress} />}
       </View>
     );
   }
@@ -53,6 +61,7 @@ function mapStateToProps(cardDecks, { navigation }) {
 function mapDispatchToProps(dispatch, { navigation }) {
   return {
     navigateToCreateQuestion: (title) => navigation.navigate('createQuestion', { title }),
+    navigateToQuiz: (title) => navigation.navigate('quiz', { title }),
   }
 }
 

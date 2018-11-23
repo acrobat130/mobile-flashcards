@@ -8,6 +8,7 @@ import DeckList from './components/DeckList';
 import CreateDeck from './components/CreateDeck';
 import DeckView from './components/DeckView';
 import CreateQuestion from './components/CreateQuestion';
+import Quiz from './components/Quiz';
 
 const store = createStore(reducer);
 
@@ -35,6 +36,9 @@ const DeckListNavigator = createStackNavigator({
   },
   createQuestion: {
     screen: CreateQuestion,
+  },
+  quiz: {
+    screen: Quiz,
   }
 });
 
