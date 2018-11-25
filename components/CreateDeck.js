@@ -30,7 +30,7 @@ class CreateDeck extends Component {
     this.setState({
       title: '',
     });
-    navigateToDeckList();
+    navigateToDeckList(title);
   }
 
   render() {
@@ -44,7 +44,7 @@ class CreateDeck extends Component {
           value={title}
           placeholder="Deck title"
         />
-        <Button text="Create new deck" onPress={this.onPress} />
+        <Button text="Create deck" onPress={this.onPress} />
       </View>
     );
   }
@@ -63,7 +63,7 @@ const styles = {
 function mapDispatchToProps(dispatch, { navigation }) {
   return {
     addNewDeck: (title) => dispatch(addDeck(title)),
-    navigateToDeckList: () => navigation.navigate('DeckList'),
+    navigateToDeckList: (title) => navigation.navigate('DeckView', { title }),
   }
 }
 

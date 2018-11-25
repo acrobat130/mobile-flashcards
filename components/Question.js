@@ -2,19 +2,22 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import Button from './Button';
+import QuizStatus from './QuizStatus';
 
 export default class Question extends Component {
   static propTypes = {
-    question: PropTypes.string.isRequired,
+    currentQuestionNumber: PropTypes.number.isRequired,
     onViewAnswer: PropTypes.func.isRequired,
+    question: PropTypes.string.isRequired,
+    questionCount: PropTypes.number.isRequired,
   }
 
   render() {
-    const { question, onViewAnswer } = this.props;
+    const { question, onViewAnswer, currentQuestionNumber, questionCount } = this.props;
 
-    // TODO: figure out why question is throwing a propTypes error
     return (
       <View>
+        <QuizStatus currentQuestionNumber={currentQuestionNumber} questionCount={questionCount} />
         <Text>Question: {question}</Text>
         <Button text="View Answer" onPress={onViewAnswer} />
       </View>

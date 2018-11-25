@@ -15,7 +15,6 @@ class Quiz extends Component {
   state = {
     correctAnswerCount: 0,
     currentQuestionIndex: 0,
-    incorrectAnswerCount: 0,
     isQuestion: true,
     isQuizFinished: false,
   }
@@ -54,12 +53,6 @@ class Quiz extends Component {
   }
 
   onIncorrectAnswer = () => {
-    const { incorrectAnswerCount } = this.state;
-
-    this.setState({
-      incorrectAnswerCount: incorrectAnswerCount + 1,
-    });
-
     this.goToNextScreen();
   }
 
@@ -67,7 +60,6 @@ class Quiz extends Component {
     this.setState({
       correctAnswerCount: 0,
       currentQuestionIndex: 0,
-      incorrectAnswerCount: 0,
       isQuestion: true,
       isQuizFinished: false,
     });
@@ -75,24 +67,26 @@ class Quiz extends Component {
 
   render() {
     const { questions, navigateToDeckView, title } = this.props;
-    const { currentQuestionIndex, isQuestion, isQuizFinished, correctAnswerCount, incorrectAnswerCount } = this.state;
+    const { currentQuestionIndex, isQuestion, isQuizFinished, correctAnswerCount } = this.state;
     const question = questions[currentQuestionIndex].question;
     const answer = questions[currentQuestionIndex].answer;
+    const currentQuestionNumber = currentQuestionIndex + 1;
+    const questionCount = questions.length;
 
     if (isQuizFinished) {
       return (
-        <QuizResults correctAnswerCount={correctAnswerCount} incorrectAnswerCount={incorrectAnswerCount} restartQuiz={this.restartQuiz} navigateToDeckView={() => navigateToDeckView(title)} />
+        <QuizResults correctAnswerCount={correctAnswerCount} questionCount={questionCount} restartQuiz={this.restartQuiz} navigateToDeckView={() => navigateToDeckView(title)} />
       );
     }
 
     if (isQuestion) {
       return (
-        <Question question={question} onViewAnswer={this.onViewAnswer} />
+        <Question question={question} onViewAnswer={this.onViewAnswer} currentQuestionNumber={currentQuestionNumber} questionCount={questionCount} />
       );
     }
 
     return (
-      <Answer answer={answer} onCorrectAnswer={this.onCorrectAnswer} onIncorrectAnswer={this.onIncorrectAnswer} />
+      <Answer answer={answer} onCorrectAnswer={this.onCorrectAnswer} onIncorrectAnswer={this.onIncorrectAnswer} currentQuestionNumber={currentQuestionNumber} questionCount={questionCount} />
     );
   }
 }
