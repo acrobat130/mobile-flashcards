@@ -2,15 +2,22 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { loadDecks } from '../actions';
 
 class DeckList extends Component {
   static propTypes = {
     decks: PropTypes.array,
+    isLoading: PropTypes.bool.isRequired,
+    loadDecks: PropTypes.func.isRequired,
     navigateToDeckView: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
     decks: [],
+  }
+
+  componentDidMount = () => {
+    this.props.loadDecks();
   }
 
   onPress = (title) => {
@@ -26,19 +33,27 @@ class DeckList extends Component {
 
     return (
       <TouchableOpacity key={title} style={styles.deck} onPress={() => this.onPress(title)}>
-        <Text>{title}</Text>
+        <Text style={styles.title}>{title}</Text>
         <Text>{`${questionCount} ${cardString}`}</Text>
       </TouchableOpacity>
     );
   }
 
   render() {
-    const { decks } = this.props;
+    const { decks, isLoading } = this.props;
     const renderedDecks = decks.map((deck) => this.renderDeck(deck));
+
+    if (isLoading) {
+      return (
+        <View style={styles.container}>
+          <Text>Loading...</Text>
+        </View>
+      );
+    }
 
     if (decks.length === 0) {
       return (
-        <View style={[styles.container, { alignItems: 'center' }]}>
+        <View style={styles.container}>
           <Text>No decks created yet.</Text>
         </View>
       );
@@ -58,6 +73,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
+    alignItems: 'center',
   },
   deck: {
     borderRadius: 5,
@@ -68,14 +84,18 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 5,
   },
+  title: {
+    fontSize: 20,
+  }
 })
 
-function mapStateToProps(cardDecks) {
+function mapStateToProps({ cardDecks, loading }) {
   const decks = Object.keys(cardDecks).map((title) => {
     return cardDecks[title];
   });
 
   return {
+    isLoading: loading,
     decks,
   }
 }
@@ -83,6 +103,7 @@ function mapStateToProps(cardDecks) {
 function mapDispatchToProps(dispatch, { navigation }) {
   return {
     navigateToDeckView: (title) => navigation.navigate('DeckView', { title }),
+    loadDecks: () => dispatch(loadDecks()),
   }
 }
 

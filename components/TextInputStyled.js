@@ -35,5 +35,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     textAlign: 'center',
     borderRadius: 5,
+    margin: 20,
   },
 })

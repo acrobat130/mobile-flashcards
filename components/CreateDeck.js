@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addDeck } from '../actions';
@@ -38,7 +38,7 @@ class CreateDeck extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>Enter the title of the deck you want to create.</Text>
+        <Text style={styles.text}>Enter the title of the deck you want to create.</Text>
         <TextInputStyled
           onChangeText={this.onChangeText}
           value={title}
@@ -50,7 +50,7 @@ class CreateDeck extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -58,7 +58,11 @@ const styles = {
     marginLeft: 10,
     marginRight: 10,
   },
-}
+  text: {
+    fontSize: 15,
+    marginBottom: 10,
+  }
+});
 
 function mapDispatchToProps(dispatch, { navigation }) {
   return {

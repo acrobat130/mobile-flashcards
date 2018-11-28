@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import Button from './Button';
+import { setNotifications, clearNotifications } from '../utils/api';
 
 export default class QuizResults extends Component {
   static propTypes = {
@@ -9,6 +10,11 @@ export default class QuizResults extends Component {
     navigateToDeckView: PropTypes.func.isRequired,
     questionCount: PropTypes.number.isRequired,
     restartQuiz: PropTypes.func.isRequired,
+  }
+
+  componentDidMount = () => {
+    clearNotifications()
+      .then(setNotifications())
   }
 
   render() {

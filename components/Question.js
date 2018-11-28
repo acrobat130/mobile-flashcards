@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import Button from './Button';
 import QuizStatus from './QuizStatus';
@@ -16,11 +16,20 @@ export default class Question extends Component {
     const { question, onViewAnswer, currentQuestionNumber, questionCount } = this.props;
 
     return (
-      <View>
+      <View style={styles.container}>
         <QuizStatus currentQuestionNumber={currentQuestionNumber} questionCount={questionCount} />
-        <Text>Question: {question}</Text>
+        <Text>Question:</Text>
+        <Text>{question}</Text>
         <Button text="View Answer" onPress={onViewAnswer} />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});

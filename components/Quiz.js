@@ -91,7 +91,7 @@ class Quiz extends Component {
   }
 }
 
-function mapStateToProps(cardDecks, { navigation }) {
+function mapStateToProps({ cardDecks }, { navigation }) {
   const { title } = navigation.state.params;
 
   return {

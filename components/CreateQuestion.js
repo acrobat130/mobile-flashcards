@@ -38,13 +38,13 @@ class CreateQuestion extends Component {
 
     return (
       <View style={styles.container}>
-        <Text>Question:</Text>
+        <Text style={styles.text}>Question:</Text>
         <TextInputStyled
           onChangeText={this.onChangeQuestion}
           value={question}
           placeholder="Question"
         />
-        <Text>Answer:</Text>
+        <Text style={styles.text}>Answer:</Text>
         <TextInputStyled
           onChangeText={this.onChangeAnswer}
           value={answer}
@@ -58,12 +58,18 @@ class CreateQuestion extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: 10,
     marginRight: 10,
+  },
+  text: {
+    fontSize: 20,
   }
 });
 
-function mapStateToProps(cardDecks, { navigation }) {
+function mapStateToProps({ cardDecks }, { navigation }) {
   const { title } = navigation.state.params;
 
   return {
